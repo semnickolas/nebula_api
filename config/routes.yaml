@@ -1,3 +1,9 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+ufo_api_server:
+  path:     /api
+  controller: Ufo\JsonRpcBundle\Controller\ApiController::serverAction
+  methods: ["GET", "POST"]
+
+index:
+  path: /
+  controller: Ufo\JsonRpcBundle\Controller\ApiController::serverAction
+  methods: ["GET", "POST"]

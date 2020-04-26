@@ -45,10 +45,14 @@ services:
     networks:
       - default
   rabbitmq:
-    image: rabbitmq:3.8-rc
+    image: bitnami/rabbitmq:latest
     container_name: nebula_api_rabbit
     ports:
       - "15639:15672"
       - "5679:5672"
+    environment:
+      RABBITMQ_USERNAME: ${RABBITMQ_USER}
+      RABBITMQ_PASSWORD: ${RABBITMQ_PASS}
+      RABBITMQ_VHOST: ${RABBITMQ_VHOST}
     networks:
       - default
