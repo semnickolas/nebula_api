@@ -5,6 +5,8 @@ namespace App\Entity;
 use DateTime;
 use DateTimeImmutable;
 use DateTimeInterface;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
@@ -58,6 +60,16 @@ class AstrologerService
      * @ORM\JoinColumn(nullable=false)
      */
     private ?Service $service;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Order", mappedBy="service")
+     */
+    private Collection $orders;
+
+    public function __construct()
+    {
+        $this->orders = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -144,6 +156,37 @@ class AstrologerService
     public function setService(?Service $service): self
     {
         $this->service = $service;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Order[]
+     */
+    public function getOrders(): Collection
+    {
+        return $this->orders;
+    }
+
+    public function addOrder(Order $order): self
+    {
+        if (!$this->orders->contains($order)) {
+            $this->orders[] = $order;
+            $order->setService($this);
+        }
+
+        return $this;
+    }
+
+    public function removeOrder(Order $order): self
+    {
+        if ($this->orders->contains($order)) {
+            $this->orders->removeElement($order);
+            // set the owning side to null (unless already changed)
+            if ($order->getService() === $this) {
+                $order->setService(null);
+            }
+        }
 
         return $this;
     }

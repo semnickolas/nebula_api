@@ -40,7 +40,7 @@ class Customer
     /**
      * @ORM\OneToMany(targetEntity="App\Entity\Order", mappedBy="customer", orphanRemoval=true)
      */
-    private ArrayCollection $orders;
+    private Collection $orders;
 
     public function __construct()
     {

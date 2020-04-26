@@ -3,7 +3,9 @@
 namespace App\Repository;
 
 use App\Entity\AstrologerService;
+use App\Exception\AstrologerServiceNotFound;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Query\Expr;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,32 +21,17 @@ class AstrologerServiceRepository extends ServiceEntityRepository
         parent::__construct($registry, AstrologerService::class);
     }
 
-    // /**
-    //  * @return AstrologerService[] Returns an array of AstrologerService objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param int $id
+     * @return AstrologerService
+     */
+    public function getService(int $id) : AstrologerService
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $service = $this->find($id);
+        if ($service === null) {
+            throw new AstrologerServiceNotFound();
+        }
 
-    /*
-    public function findOneBySomeField($value): ?AstrologerService
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return $service;
     }
-    */
 }

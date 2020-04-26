@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Customer;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\OptimisticLockException;
+use Doctrine\ORM\ORMException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,32 +21,32 @@ class CustomerRepository extends ServiceEntityRepository
         parent::__construct($registry, Customer::class);
     }
 
-    // /**
-    //  * @return Customer[] Returns an array of Customer objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param string $email
+     * @param string $name
+     * @return Customer
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function getCustomer(string $email, string $name) : Customer
     {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->orderBy('c.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+        $customer = $this->findOneBy(['email' => $email]);
+        if ($customer === null) {
+            $customer = (new Customer())->setEmail($email)->setName($name);
+            $this->save($customer);
+        }
 
-    /*
-    public function findOneBySomeField($value): ?Customer
-    {
-        return $this->createQueryBuilder('c')
-            ->andWhere('c.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        return $customer;
     }
-    */
+
+    /**
+     * @param Customer $customer
+     * @throws ORMException
+     * @throws OptimisticLockException
+     */
+    public function save(Customer $customer) : void
+    {
+        $this->_em->persist($customer);
+        $this->_em->flush();
+    }
 }

@@ -14,6 +14,9 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Order
 {
+    public const STATUS_NEW = 1;
+    public const STATUS_PAID = 2;
+
     /**
      * @ORM\Id()
      * @ORM\GeneratedValue()
@@ -52,6 +55,11 @@ class Order
      * @ORM\JoinColumn(nullable=false)
      */
     private ?Customer $customer;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="App\Entity\AstrologerService", inversedBy="yes")
+     */
+    private $service;
 
     public function getId(): ?int
     {
@@ -126,6 +134,18 @@ class Order
     public function setCustomer(?Customer $customer): self
     {
         $this->customer = $customer;
+
+        return $this;
+    }
+
+    public function getService(): ?AstrologerService
+    {
+        return $this->service;
+    }
+
+    public function setService(?AstrologerService $service): self
+    {
+        $this->service = $service;
 
         return $this;
     }

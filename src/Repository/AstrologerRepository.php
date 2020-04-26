@@ -3,6 +3,8 @@
 namespace App\Repository;
 
 use App\Entity\Astrologer;
+use App\TransportObject\Query\GetAstrologer;
+use App\TransportObject\Query\GetAstrologers;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -19,32 +21,37 @@ class AstrologerRepository extends ServiceEntityRepository
         parent::__construct($registry, Astrologer::class);
     }
 
-    // /**
-    //  * @return Astrologer[] Returns an array of Astrologer objects
-    //  */
-    /*
-    public function findByExampleField($value)
+    /**
+     * @param GetAstrologer $query
+     * 
+     * @return Astrologer
+     */
+    public function getAstrologer(GetAstrologer $query) : Astrologer
     {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
+        return $this->find($query->getId());
+    }
+    
+    /**
+     * @param GetAstrologers $query
+     * @return array
+     */
+    public function getAstrologers(GetAstrologers $query) : array
+    {
+        $filter = $query->getFilter();
+        $qb = $this->createQueryBuilder('a')
             ->orderBy('a.id', 'ASC')
-            ->setMaxResults(10)
-            ->getQuery()
-            ->getResult()
-        ;
-    }
-    */
+            ->setFirstResult($query->getOffset())
+            ->setMaxResults($query->getLimit());
 
-    /*
-    public function findOneBySomeField($value): ?Astrologer
-    {
-        return $this->createQueryBuilder('a')
-            ->andWhere('a.exampleField = :val')
-            ->setParameter('val', $value)
-            ->getQuery()
-            ->getOneOrNullResult()
-        ;
+        if (!empty($filter)) {
+            $literal = $qb->expr()->literal("%$filter%");
+            $qb->add('where', $qb->expr()->orX(
+                $qb->expr()->like('a.firstName', $literal),
+                $qb->expr()->like('a.lastName', $literal),
+                $qb->expr()->like('a.email', $literal),
+            ));
+        }
+
+        return $qb->getQuery()->getArrayResult();
     }
-    */
 }
