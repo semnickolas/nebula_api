@@ -77,10 +77,28 @@
 		{
 			"name": "BuyService",
 			"request": {
-				"method": "GET",
-				"header": [],
+				"method": "POST",
+				"header": [
+					{
+						"key": "{{header}}",
+						"value": "{{headerValue}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\" : 1,\n\t\"method\" : \"OrderCommandProcedure.buyService\",\n\t\"params\" : {\n\t\t\"serviceId\" : 1,\n\t\t\"buyerEmail\" : \"test@test.com\",\n\t\t\"buyerName\" : \"Ivan\"\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
 				"url": {
-					"raw": ""
+					"raw": "{{url}}",
+					"host": [
+						"{{url}}"
+					]
 				}
 			},
 			"response": []
