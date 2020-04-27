@@ -1,5 +1,11 @@
-# nebula_api
+# Nebula Api (Demo)
 
-Wrine in you'r terminal 
+Write in your terminal 
+```console
 *bin/run.sh* 
-an use collection for postman. Hope you are enjoy it.
+```
+Use Postman collection for retrieve result. Hope you are enjoy it.
+
+Test sheet - https://docs.google.com/spreadsheets/d/1Md0tEUewgTwXhDF-wz5886CpPWww6ceM9Qa5tIVX8_I
+
+You can change env vars for your own sheet and google app.

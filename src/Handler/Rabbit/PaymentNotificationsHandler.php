@@ -19,6 +19,8 @@ class PaymentNotificationsHandler implements MessageHandlerInterface
 {
     private const RANGE = 'A2:H';
 
+    private string $sheetId;
+
     private SpreadSheetsClientFactory $factory;
 
     private OutputInterface $output;
@@ -27,10 +29,12 @@ class PaymentNotificationsHandler implements MessageHandlerInterface
      * PaymentNotificationsHandler constructor.
      *
      * @param SpreadSheetsClientFactory $factory
+     * @param string $sheetId
      */
-    public function __construct(SpreadSheetsClientFactory $factory)
+    public function __construct(SpreadSheetsClientFactory $factory, string $sheetId)
     {
         $this->factory = $factory;
+        $this->sheetId = $sheetId;
         $this->output = new ConsoleOutput();
     }
 
@@ -58,7 +62,7 @@ class PaymentNotificationsHandler implements MessageHandlerInterface
     private function handleRaw(Google_Service_Sheets $client, Google_Service_Sheets_ValueRange $body) : void
     {
         $client->spreadsheets_values->append(
-            '1Md0tEUewgTwXhDF-wz5886CpPWww6ceM9Qa5tIVX8_I',
+            $this->sheetId,
             self::RANGE,
             $body,
             ["valueInputOption" => "RAW", "insertDataOption" => "INSERT_ROWS"]

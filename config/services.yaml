@@ -70,6 +70,10 @@ services:
             - { name: messenger.message_handler, bus: query.bus }
 
     App\Handler\Rabbit\PaymentNotificationsHandler:
+        class: App\Handler\Rabbit\PaymentNotificationsHandler
+        arguments:
+            - '@App\Component\SpreadSheetsClientFactory'
+            - '%env(GOOGLE_SHEET_ID)%'
         tags: [messenger.message_handler]
 
     App\Component\SpreadSheetsClientFactory:
