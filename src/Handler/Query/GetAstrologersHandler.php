@@ -3,6 +3,7 @@
 namespace App\Handler\Query;
 
 use App\Repository\AstrologerRepository;
+use App\Component\AstrologerDataFormatter;
 use App\TransportObject\Query\GetAstrologers;
 
 /**
@@ -13,13 +14,17 @@ class GetAstrologersHandler
 {
     private AstrologerRepository $repository;
 
+    private AstrologerDataFormatter $formatter;
+
     /**
      * GetAstrologersHandler constructor.
      * @param AstrologerRepository $repository
+     * @param AstrologerDataFormatter $formatter
      */
-    public function __construct(AstrologerRepository $repository)
+    public function __construct(AstrologerRepository $repository, AstrologerDataFormatter $formatter)
     {
         $this->repository = $repository;
+        $this->formatter = $formatter;
     }
 
     /**
@@ -28,6 +33,8 @@ class GetAstrologersHandler
      */
     public function __invoke(GetAstrologers $query) : array
     {
-        return $this->repository->getAstrologers($query);
+        $astrologers = $this->repository->getAstrologers($query);
+
+        return $this->formatter->formatAstrologers($astrologers);
     }
 }

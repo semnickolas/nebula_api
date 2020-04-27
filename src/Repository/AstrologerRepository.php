@@ -52,6 +52,6 @@ class AstrologerRepository extends ServiceEntityRepository
             ));
         }
 
-        return $qb->getQuery()->getArrayResult();
+        return $qb->getQuery()->getResult();
     }
 }

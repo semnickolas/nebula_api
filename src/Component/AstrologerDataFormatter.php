@@ -27,6 +27,27 @@ class AstrologerDataFormatter
     }
 
     /**
+     * @param array $astrologers
+     * @return array
+     */
+    public function formatAstrologers(array $astrologers) : array
+    {
+        $result = [];
+        foreach ($astrologers as $astrologer) {
+            $astrologerId = $astrologer->getId();
+            $result[$astrologerId] = [
+                Index::ID => $astrologerId,
+                Index::PHOTO => $astrologer->getPhoto(),
+                Index::FIRST_NAME => $astrologer->getFirstName(),
+                Index::LAST_NAME => $astrologer->getLastName(),
+            ];
+            $this->appendServices($result[$astrologerId], $astrologer->getServices());
+        }
+
+        return $result;
+    }
+
+    /**
      * @param Astrologer $astrologer
      * @return array
      */
