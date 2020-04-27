@@ -10,6 +10,9 @@
 /vendor/
 ###< symfony/framework-bundle ###
 
+.data
+.idea
+
 ###> symfony/phpunit-bridge ###
 .phpunit
 .phpunit.result.cache
