@@ -68,3 +68,12 @@ services:
         autoconfigure: false
         tags:
             - { name: messenger.message_handler, bus: query.bus }
+
+    App\Handler\Rabbit\PaymentNotificationsHandler:
+        tags: [messenger.message_handler]
+
+    App\Component\SpreadSheetsClientFactory:
+        class: App\Component\SpreadSheetsClientFactory
+        arguments:
+            - '%kernel.project_dir%/bin/google/token.json'
+            - '@Google_Client'

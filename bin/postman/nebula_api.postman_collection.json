@@ -1,0 +1,90 @@
+{
+	"info": {
+		"_postman_id": "510e6fb8-2ffb-4d8b-9bee-524c9af4a0b2",
+		"name": "nebula_api",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Methods",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAstrologers",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "{{header}}",
+						"value": "{{headerValue}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\" : 1,\n\t\"method\" : \"AstrologerQueryProcedure.getAstrologers\",\n\t\"params\" : {\n\t\t\"page\" : 1,\n\t\t\"pageSize\" : 100,\n\t\t\"filter\" : \"\"\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}",
+					"host": [
+						"{{url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetAstrologer",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "{{header}}",
+						"value": "{{headerValue}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"id\" : 1,\n\t\"method\" : \"AstrologerQueryProcedure.getAstrologer\",\n\t\"params\" : {\n\t\t\"id\" : 1\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{url}}",
+					"host": [
+						"{{url}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "BuyService",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

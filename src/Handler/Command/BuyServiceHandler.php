@@ -3,10 +3,10 @@
 namespace App\Handler\Command;
 
 use App\Component\PaymentProcessor;
+use App\TransportObject\PaymentNotification;
 use App\Repository\AstrologerServiceRepository;
 use App\Repository\CustomerRepository;
 use App\TransportObject\Command\BuyService;
-use App\TransportObject\PaymentNotification;
 use Doctrine\ORM\OptimisticLockException;
 use Doctrine\ORM\ORMException;
 use Symfony\Component\Messenger\MessageBusInterface;

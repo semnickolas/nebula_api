@@ -1,6 +1,5 @@
 <?php
 
-
 namespace App\TransportObject;
 
 use App\Entity\AstrologerService;
@@ -24,6 +23,8 @@ class PaymentNotification
 
     private string $serviceTitle;
 
+    private int $orderId;
+
     private float $orderCost;
 
     private DateTimeInterface $paidDate;
@@ -35,16 +36,26 @@ class PaymentNotification
      * @param int $astrologerId
      * @param string $astrologerEmail
      * @param string $serviceTitle
+     * @param int $orderId
      * @param float $orderCost
      * @param DateTimeInterface $paidDate
      */
-    public function __construct(string $customerEmail, string $customerName, int $astrologerId, string $astrologerEmail, string $serviceTitle, float $orderCost, DateTimeInterface $paidDate)
-    {
+    public function __construct(
+        string $customerEmail,
+        string $customerName,
+        int $astrologerId,
+        string $astrologerEmail,
+        string $serviceTitle,
+        int $orderId,
+        float $orderCost,
+        DateTimeInterface $paidDate
+    ) {
         $this->customerEmail = $customerEmail;
         $this->customerName = $customerName;
         $this->astrologerId = $astrologerId;
         $this->astrologerEmail = $astrologerEmail;
         $this->serviceTitle = $serviceTitle;
+        $this->orderId = $orderId;
         $this->orderCost = $orderCost;
         $this->paidDate = $paidDate;
     }
@@ -63,6 +74,7 @@ class PaymentNotification
             $service->getAstrologer()->getId(),
             $service->getAstrologer()->getEmail(),
             $service->getService()->getTitle(),
+            $order->getId(),
             $order->getCost(),
             $order->getPaidAt()
         );
@@ -122,5 +134,13 @@ class PaymentNotification
     public function getPaidDate(): DateTimeInterface
     {
         return $this->paidDate;
+    }
+
+    /**
+     * @return int
+     */
+    public function getOrderId() : int
+    {
+        return $this->orderId;
     }
 }
