@@ -2,7 +2,7 @@
 
 Write in your terminal 
 ```console
-*bin/run.sh* 
+bin/run.sh 
 ```
 Use Postman collection for retrieve result. Hope you are enjoy it.
 
